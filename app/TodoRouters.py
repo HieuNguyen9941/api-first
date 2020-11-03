@@ -8,13 +8,13 @@ todo = Blueprint('todo', __name__)
 # http://localhost:5000/api/todo  method = GET
 @todo.route('/api/todo', methods=['GET'])
 def get_all():
-    return json.dumps(get_all_todo(),cls=JSONEncoder) 
+    return json.htmlsafe_dumps(get_all_todo(),cls=JSONEncoder) 
 
 # http://localhost:5000/api/todo/?id=5f99531d218d5f2074d93120  method = GET
 @todo.route('/api/todo/', methods=['GET'])
 def get_todo():
     id = request.args['id']
-    return json.dumps(get_todo_by_id_controler({"_id" : ObjectId(id)}),cls=JSONEncoder)
+    return json.htmlsafe_dumps(get_todo_by_id_controler({"_id" : ObjectId(id)}),cls=JSONEncoder)
 
 # http://localhost:5000/api/todo  method = POST
 @todo.route('/api/todo', methods=['POST'])
@@ -24,7 +24,7 @@ def add_todo():
     data = {"name": name, "age": age}
     id = add_todo_controller(data)
     data['_id']=id
-    return json.dumps(data,cls=JSONEncoder)
+    return json.htmlsafe_dumps(data,cls=JSONEncoder)
 
 # http://localhost:5000/api/todo  method = PUT
 @todo.route('/api/todo', methods=['PUT'])
