@@ -1,7 +1,6 @@
 from flask import Blueprint, request, json
 from .Todo import get_all_todo, add_todo_controller, update_todo_controller, delete_todo_controller,get_todo_by_id_controler
 
-
 todo = Blueprint('todo', __name__)
 
 # http://localhost:5000/api/todo  method = GET
