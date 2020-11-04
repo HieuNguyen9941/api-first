@@ -8,37 +8,38 @@ todo = Blueprint('todo', __name__)
 # http://localhost:5000/api/todo  method = GET
 @todo.route('/api/todo', methods=['GET'])
 def get_all():
-    return json.htmlsafe_dumps(get_all_todo(),cls=JSONEncoder) 
+    return json.htmlsafe_dumps(get_all_todo()) 
 
-# http://localhost:5000/api/todo/?id=5f99531d218d5f2074d93120  method = GET
+# http://localhost:5000/api/todo/?id=3 method = GET
 @todo.route('/api/todo/', methods=['GET'])
 def get_todo():
     id = request.args['id']
-    return json.htmlsafe_dumps(get_todo_by_id_controler({"_id" : ObjectId(id)}),cls=JSONEncoder)
+    return json.htmlsafe_dumps(get_todo_by_id_controler({"_id" : int(id)}))
 
 # http://localhost:5000/api/todo  method = POST
 @todo.route('/api/todo', methods=['POST'])
 def add_todo():
+    id = request.json['_id']
     name = request.json['name']
-    age  =request.json['age'] 
-    data = {"name": name, "age": age}
-    id = add_todo_controller(data)
-    data['_id']=id
-    return json.htmlsafe_dumps(data,cls=JSONEncoder)
+    age  =request.json['age']
+    data = {"_id": id, "name": name, "age": age}
+    add_todo_controller(data)
+    return "ok"
 
-# http://localhost:5000/api/todo  method = PUT
-@todo.route('/api/todo', methods=['PUT'])
+# http://localhost:5000/api/todo/?_id=3  method = PUT
+@todo.route('/api/todo/', methods=['PUT'])
 def put_todo():
+    id  = request.args['_id']
     name = request.json['name']
-    age  =request.json['age'] 
-    id  =request.json['id'] 
-    update_todo_controller({"name":name, "age":age,"_id":ObjectId(id)})
+    age  =request.json['age']
+    update_todo_controller({"name":name, "age":age,"_id":int(id)})
+    print(id)
     return 'ok'
 
-# http://localhost:5000/api/todo/?id=hjhjhjhj  method = DELETE
+# http://localhost:5000/api/todo/?_id=4  method = DELETE
 @todo.route('/api/todo/', methods=['DELETE'])
 def delete_todo():
-    id  = request.args['id']
-    delete_todo_controller({"_id":ObjectId(id)})
+    id  = request.args['_id']
+    delete_todo_controller({"_id":int(id)})
     return 'ok'
 
