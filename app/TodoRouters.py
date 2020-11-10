@@ -1,5 +1,5 @@
 from flask import Blueprint, request, json
-from .Todo import get_all_todo, add_todo_controller, update_todo_controller, delete_todo_controller,get_todo_by_id_controler
+from .Todo import get_all_todo, add_todo_controller, update_todo_controller, delete_todo_controller,get_todo_by_id_controler,createId
 
 todo = Blueprint('todo', __name__)
 
@@ -17,7 +17,7 @@ def get_todo():
 # http://localhost:5000/api/todo  method = POST
 @todo.route('/api/todo', methods=['POST'])
 def add_todo():
-    id = request.json['_id']
+    id = int(createId())+1
     name = request.json['name']
     age  =request.json['age']
     data = {"_id": id, "name": name, "age": age}
@@ -41,3 +41,4 @@ def delete_todo():
     delete_todo_controller({"_id":int(id)})
     return 'ok'
 
+    
